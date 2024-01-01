@@ -1,0 +1,425 @@
+body {
+  background-color: #f2f2f2;
+  height: 100vh;
+
+  animation: circle 3s linear infinite alternate;
+  background-image: url("../images/stars1.png");
+  background-size: 90%;
+  background-color: #0c030e;
+  color: #fff;
+}
+.contentRooms{
+  max-width: 98%;
+  /* overflow-x: auto; */
+  display: flex;
+  flex-wrap: wrap;
+}
+.contentRooms::-webkit-scrollbar{
+  width: 0;
+}
+
+@keyframes circle {
+  from{
+    background-size: 90%;
+  }
+
+  to{
+    background-size: 100%;
+  }
+}
+
+h1{
+  text-align: left;
+  border-bottom: 4px dotted #fff;
+  color: #fff;
+  text-shadow: 0 0 10px #fff;
+  box-shadow: 0 0 15px #fff;
+  font-size: 40px;
+
+}
+.setting{
+  position: absolute;
+  top: 5%;
+  right: 1%;
+  font-weight: 700;
+
+}
+.updateSetting{
+  background-color: #fff;
+  height: 70vh;
+  width: 97.5vw;
+  position: absolute;
+  z-index: 666666;
+  top: -80%;
+  transition: .7s;
+
+
+}
+label{
+  color: #123;
+}
+.contentDescription{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.addRoom{
+  background-color: #ffcc00;
+  color: #170210;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 600;
+
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.addRoom:hover {
+  background-color: #ffa500;
+}
+
+
+
+input[type="text"], input[type="password"],input[type="email"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input[type="button"] {
+  background-color: #ffcc00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+input[type="button"]:hover {
+  background-color: #ffa500;
+}
+
+.loteFile{
+  border-radius: 8px;
+  overflow: hidden;
+  width: 50%;
+  transition: .7s;
+
+}
+ lottie-player{
+  width: 75%;
+}
+.signUp{
+  position: fixed;
+  top:0;
+  left: 30%;
+  width: 36%;
+  transition: .7s;
+  transform: scale(0);
+  z-index: 99999;
+}
+
+.contentAddRoom{
+  background-color: #ffffff;
+  position: fixed;
+  top: 17%;
+  left: 19%;
+  bottom: 15px;
+  border-radius: 8px;
+  color: #3a0227;
+width: 62%;
+  transition: .7s;
+  transform: translateX(120vw);
+  z-index: 77777777;
+}
+
+.close{
+  position: absolute;
+  top: 3%;
+  right: 15px;
+}
+
+
+
+.card{
+width: 23%;
+ height: 250px;
+  background-image: url("../images/4.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    
+}
+.card i{
+position: absolute;
+top: 5%;
+left: 5%;
+
+cursor: pointer;
+background-color: #fff;
+padding: 5px;
+width: 28px;
+border-radius: 3px;
+color: #123;
+font-size: 20px;
+
+box-shadow: 0 0 5px #123;
+}
+.room__title{
+  font-size: 2rem;
+    color: #fff;
+    text-transform: capitalize;
+
+    padding: 5px;
+    backdrop-filter: blur(10px);
+  
+}
+.visit{
+  margin: 5px auto !important;
+  width: 50% !important;
+  font-weight: 600;
+}
+.deletbtnThisRoom{
+cursor: pointer;
+position: relative !important;
+left: -3px !important;
+top: -5px !important;
+transition: .7s;
+}
+.deletbtnThisRoom:hover{
+scale:.9
+  }
+  
+.alertMessage{
+  position: absolute;
+  top: 10px;
+  left: 25px;
+  width: 70%;
+  z-index: 555555555555555;
+
+  color: red;
+font-size: 22px;
+
+
+}
+
+
+
+
+#containerImage{
+
+  transform: scale(0);
+  background-color: #fff;
+
+transition: .7s;
+  border-radius: 10px;
+  position: fixed;
+  top: 0%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100000000 !important;
+  overflow-y: auto;
+}
+#closeImages{
+  background-color: #000;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 10px;
+  display: block;
+  margin-top: 15px;
+  margin-left: 96%;
+  width: 38px;
+  height: 38px;
+  line-height: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+#containerImage h2{
+  color: #123;
+  text-align: center;
+  margin: 25px 0;
+  font-size: 35px;
+  font-weight: 700;
+}
+.containerSelectionImages{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cardImage{
+  width: 15%;
+
+  cursor: pointer;
+  margin: 10px;
+
+}
+.cardImage img{
+  width: 100%;
+  border-radius: 5px;
+  height: 150px;
+}
+.cardImage span{
+  display: block;
+  margin: 10px auto;
+  font-size: 1px;
+  font-weight: 700;
+  color: #fff;
+}
+
+@media (max-width:992px) {
+  h1{
+  
+    font-size: 20px;
+  
+  }
+  
+  .setting{
+    
+    top: 2%;
+  
+    font-weight: 600;
+  }
+  .description h2 ,.description p{
+    display: none;
+  }
+  .loteFile{
+
+    width: 95% !important;
+    margin: 25px auto !important;
+  
+  
+  }
+  lottie-player{
+    width: 95%;
+  }
+.contentDescription{
+  flex-direction: column;
+}
+  .description .addRoom{
+margin: 15px auto;
+display: block;
+  
+
+  }
+  
+  
+  .contentAddRoom{
+
+    left: 5%;
+
+    width: 90%;
+
+  }
+  .card{
+    width: 31%;
+  }
+  .animationAddRoom{
+    display: none;
+  }
+
+  #containerImage{
+
+    bottom: 5%;
+
+  }
+#closeImages{
+
+  margin-left: 90%;
+
+}
+#containerImage h2{
+
+  font-size: 25px;
+
+}
+
+.cardImage{
+  width: 30%;
+
+  cursor: pointer;
+  margin: 10px;
+
+}
+
+}
+
+.fa-trash-can {
+  background: #fff;
+  border: none;
+  position: absolute;
+  padding: 4px 8px;
+  font-size: 18px;
+  border-radius: 5px;
+  box-shadow: 0 0 1px #123;
+  cursor: pointer;
+  left: 7px;
+  transition: 0.7s;
+  color: red !important;
+}
+.fa-trash-can:hover {
+  scale: 0.9;
+}
+
+@media (max-width:800px) {
+
+  .card{
+    width: 43vw;
+    height: 160px;
+  
+
+   }
+   .card i{
+
+   padding: 5px;
+   width: 24px;
+
+   font-size: 15px;
+
+   }
+   .room__title{
+     font-size: 15px;
+
+   }
+
+   .visit{
+    margin: 5px auto !important;
+    width: 80% !important;
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width:500px) {
+  .cardImage{
+    width: 43%;
+  
+    
+  
+  }
+  .setting{
+  padding: 5px 8px;
+    font-weight: 700;
+    font-size: 15px;
+    top:2%;
+  }
+    h1{
+    
+  font-size: 15px;
+
+    }
+
+}

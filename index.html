@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home</title>
+
+  <link rel="stylesheet" href=" css/all.min.css">
+  <link rel="stylesheet" href=" css/bootstrap.min.css">
+  <link rel="stylesheet" href=" css/index.css">
+  <link rel="stylesheet" href=" css/all.min.css">
+</head>
+<body>
+
+  <h1 class="p-3">مرحبا بكم في المنزل الذكي</h1>
+  <div class="container d-flex justify-content-around align-items-center ">
+  
+    <!-- animation using lottiefiles -->
+    <div class="loteFile">
+      <lottie-player src="https://lottie.host/602ce043-3ed1-47cc-b4a0-ef23918993f3/IFPMedjjGQ.json" style="background:#fff ; " speed="1" loop  autoplay direction="1" mode="normal" class="p-2"></lottie-player>
+    </div>
+  <!-- Form Sign in -->
+      <form class="p-5 myform" dir="rtl">
+        <h2 class="mb-3 fs-1">تسجيل الدخول</h2>
+        <label for="username" class=" mb-2">أدخل الايميل : </label>
+        <input type="email" id="email" name="email" dir="ltr">
+        <label for="password" class=" mb-2">أدخل كلمة المرور :</label>
+        <input type="password" id="password" name="password" dir="ltr">
+     <input type="button" value="تسجيل" class="loginpage">
+    
+      </form>
+
+  
+  </div>
+  
+
+<div class="correct">
+  <span class="close">X</span>
+  <p class="error-message"></p>
+</div>
+
+<!-- calling link lottiefiles -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src=" js/jquery_3.7.0.js"></script>
+<script src=" js/popper.js"></script>
+<script src=" js/bootstrap_5.3.0.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src=" js/index.js"></script>
+  
+</body>
+</html>
+
+
+
