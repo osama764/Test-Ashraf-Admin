@@ -83,8 +83,11 @@ recognition.onresult = async function (event) {
 
 if (words[0] == "شغل" && words.length > 1) {
   const surahName = words.slice(1).join(' ');
-  await speak("جاري تنفيذ طلبك")
-  searchAndPlaySurahOnYouTube(surahName);
+   speak("جاري تنفيذ طلبك")
+  setTimeout(()=>{
+    searchAndPlaySurahOnYouTube(surahName);
+  }, 2000);
+  
 }
 
 
