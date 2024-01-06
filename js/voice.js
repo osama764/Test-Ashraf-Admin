@@ -57,24 +57,8 @@ recognition.onresult = async function (event) {
 
     if (deviceName.includes("واحده")) {
       deviceName = deviceName.replace("واحده", "واحد");
-    }else if(deviceName.includes("2")){
-      deviceName = deviceName.replace("2", "اتنين");
-    }else if(deviceName.includes("3")){
-      deviceName = deviceName.replace("3", "تلاتة");
-    }else if(deviceName.includes("4")){
-      deviceName = deviceName.replace("4", "اربعة");
-    }else if(deviceName.includes("5")){
-      deviceName = deviceName.replace("5", "خمسة");
-    }else if(deviceName.includes("6")){
-      deviceName = deviceName.replace("6", "ستة");
-    }else if(deviceName.includes("7")){
-      deviceName = deviceName.replace("7", "سبعة");
-    }else if(deviceName.includes("8")){
-      deviceName = deviceName.replace("8", "تمانية");
-    }else if(deviceName.includes("9")){
-      deviceName = deviceName.replace("9", "تسعة");
-    }else if(deviceName.includes("10")){
-      deviceName = deviceName.replace("10", "عشرة");
+    }else if(deviceName.includes("1")){
+      deviceName = deviceName.replace("1", "واحد");
     }
 
     try {
@@ -95,6 +79,28 @@ recognition.onresult = async function (event) {
 
     }
     
+}
+
+if (words[0] == "شغل" && words.length > 1) {
+  const surahName = words.slice(1).join(' ');
+  await speak("جاري تنفيذ طلبك")
+  searchAndPlaySurahOnYouTube(surahName);
+}
+
+
+if (words[0] == "اخبار" && words[1] == "الطقس") {
+  inquireWeatherConditions()
+    .then(result => speak(result))
+    .catch(error => speak(error));
+}
+
+if(words[0] == "اخر" && words[1] == "الاخبار"){
+  getLatestNews('638f1888cc444206b6e8664439735bbd');
+}
+
+if (words[0] == "ابحث" && words.length > 1) {
+  const query = words.slice(1).join(' ');
+  searchOnGoogle(query);
 }
 }
 
@@ -270,4 +276,87 @@ async function changeStatusByTypeOfDevices(typeOfDevice,newStatus) {
 }
 
 
+async function speak(text) {
+  console.log(text);
+  try {
+    await responsiveVoice.speak(text, 'Arabic Male');
+  } catch (error) {
+    console.error('حدث خطأ أثناء تشغيل الصوت:', error);
+  }
+}
+
+// ************************* اوامر اضافية******************
+
+
+// تابع للبحث وتشغيل السورة على YouTube
+
+
+function searchAndPlaySurahOnYouTube(surahName) {
+const apiKey = 'AIzaSyAU5t_qN921VW0jOnhWoAnoDxxAEdixjBE';
+  const apiUrl = `https://www.googleapis.com/youtube/v3/search?q=${surahName}&part=snippet&type=video&key=${apiKey}`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      const videoId = data.items[0].id.videoId;
+      const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+      // استخدام window.open داخل setTimeout للتأكد من فتح النافذة الجديدة
+      setTimeout(() => {
+        window.open(videoUrl, '_blank');
+      }, 100);
+    })
+    .catch(error => {
+      console.error('حدث خطأ أثناء البحث عن السورة على YouTube:', error);
+    });
+}
+// تابع لاستعلام حالة الطقس
+async function inquireWeatherConditions() {
+  try {
+    const apiKey = '4dd7652a83af4d7580b90511240201';
+    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=cairo`;
+
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    if (response.ok) {
+      const temperature = data.current.temp_c;
+      const condition = data.current.condition.text;
+
+      console.log(`حالة الطقس الحالية: ${temperature} درجة مئوية`);
+      return `حالة الطقس الحالية: ${temperature} درجة مئوية`;
+    } else {
+      console.error(`حدث خطأ أثناء استعلام حالة الطقس: ${data.error.message}`);
+      return `حدث خطأ أثناء استعلام حالة الطقس: ${data.error.message}`;
+    }
+  } catch (error) {
+    console.error('حدث خطأ غير متوقع أثناء استعلام حالة الطقس:', error);
+    return 'حدث خطأ غير متوقع أثناء استعلام حالة الطقس';
+  }
+}
+
+// تابع لجلب آخر الأخبار باستخدام NewsAPI
+function getLatestNews(apiKey) {
+  const apiUrl = `https://newsapi.org/v2/top-headlines?country=eg&apiKey=${apiKey}`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      // عرض العناوين الرئيسية للأخبار
+      const headlines = data.articles.map(article => article.title);
+      console.log('آخر الأخبار:', headlines);
+
+    
+    })
+    .catch(error => {
+      console.error('حدث خطأ أثناء جلب الأخبار:', error);
+    });
+}
+
+
+// دالة للبحث على Google
+function searchOnGoogle(query) {
+  const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+  window.open(searchUrl, '_blank');
+}
 
