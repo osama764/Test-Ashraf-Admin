@@ -83,28 +83,27 @@ recognition.onresult = async function (event) {
 
 if (words[0] == "شغل" && words.length > 1) {
   const surahName = words.slice(1).join(' ');
-   speak("جاري تنفيذ طلبك")
-  setTimeout(()=>{
+  
     searchAndPlaySurahOnYouTube(surahName);
-  }, 2000);
+  
   
 }
 
 
-if (words[0] == "اخبار" && words[1] == "الطقس") {
-  inquireWeatherConditions()
-    .then(result => speak(result))
-    .catch(error => speak(error));
-}
+// if (words[0] == "اخبار" && words[1] == "الطقس") {
+//   inquireWeatherConditions()
+//     .then(result => speak(result))
+//     .catch(error => speak(error));
+// }
 
-if(words[0] == "اخر" && words[1] == "الاخبار"){
-  getLatestNews('638f1888cc444206b6e8664439735bbd');
-}
+// if(words[0] == "اخر" && words[1] == "الاخبار"){
+//   getLatestNews('638f1888cc444206b6e8664439735bbd');
+// }
 
-if (words[0] == "ابحث" && words.length > 1) {
-  const query = words.slice(1).join(' ');
-  searchOnGoogle(query);
-}
+// if (words[0] == "ابحث" && words.length > 1) {
+//   const query = words.slice(1).join(' ');
+//   searchOnGoogle(query);
+// }
 }
 
 
