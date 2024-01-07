@@ -203,7 +203,7 @@ recognition.onstart = function() {
 };
 
 recognition.onend = function() {
-  recognition.audio = true;
+  recognition.audio = false;
   recognition.start();
 };
 
