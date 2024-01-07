@@ -83,11 +83,16 @@ recognition.onresult = async function (event) {
 
 if (words[0] == "شغل" && words.length > 1) {
   const surahName = words.slice(1).join(' ');
-  
-    searchAndPlaySurahOnYouTube(surahName);
-  
-  
+  await speak("جاري تنفيذ طلبك");
+  searchAndPlaySurahOnYouTube(surahName);
+} 
+if (words[0] == "وقف" || words[0] == "اسكت") {
+  stopYouTubePlayer();
+} 
+if (words[0] == "كمل") {
+  continueYouTubePlayer();
 }
+
 
 
 // if (words[0] == "اخبار" && words[1] == "الطقس") {
@@ -287,78 +292,119 @@ async function speak(text) {
   }
 }
 
+
 // ************************* اوامر اضافية******************
 
-
-// تابع للبحث وتشغيل السورة على YouTube
-
+let player;
 
 function searchAndPlaySurahOnYouTube(surahName) {
-const apiKey = 'AIzaSyAU5t_qN921VW0jOnhWoAnoDxxAEdixjBE';
+  const apiKey = 'AIzaSyAU5t_qN921VW0jOnhWoAnoDxxAEdixjBE'; // يجب وضع مفتاح API الخاص بك هنا
   const apiUrl = `https://www.googleapis.com/youtube/v3/search?q=${surahName}&part=snippet&type=video&key=${apiKey}`;
+
+  // قبل تشغيل الفيديو الجديد، تأكد من إيقاف أي فيديو قيد التشغيل
+  if(player){
+
+    stopYouTubePlayer();
+  }
 
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
       const videoId = data.items[0].id.videoId;
-      const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-      // استخدام window.open داخل setTimeout للتأكد من فتح النافذة الجديدة
-      setTimeout(() => {
-        window.open(videoUrl, '_blank');
-      }, 100);
+      
+      // قم بتشغيل الفيديو الجديد
+      player = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: videoId,
+        playerVars: {
+          'autoplay': 1,
+          'controls': 0,
+          'showinfo': 0,
+          'modestbranding': 1,
+          'loop': 1,
+          'fs': 0,
+          'cc_load_policy': 0,
+          'iv_load_policy': 3,
+        },
+        events: {
+          'onReady': onPlayerReady,
+        },
+      });
     })
     .catch(error => {
       console.error('حدث خطأ أثناء البحث عن السورة على YouTube:', error);
     });
 }
-// تابع لاستعلام حالة الطقس
-async function inquireWeatherConditions() {
-  try {
-    const apiKey = '4dd7652a83af4d7580b90511240201';
-    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=cairo`;
 
-    const response = await fetch(apiUrl);
-    const data = await response.json();
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
 
-    if (response.ok) {
-      const temperature = data.current.temp_c;
-      const condition = data.current.condition.text;
-
-      console.log(`حالة الطقس الحالية: ${temperature} درجة مئوية`);
-      return `حالة الطقس الحالية: ${temperature} درجة مئوية`;
-    } else {
-      console.error(`حدث خطأ أثناء استعلام حالة الطقس: ${data.error.message}`);
-      return `حدث خطأ أثناء استعلام حالة الطقس: ${data.error.message}`;
-    }
-  } catch (error) {
-    console.error('حدث خطأ غير متوقع أثناء استعلام حالة الطقس:', error);
-    return 'حدث خطأ غير متوقع أثناء استعلام حالة الطقس';
+function stopYouTubePlayer() {
+  // إذا كان هناك فيديو قيد التشغيل وليس محذوفًا، قم بإيقافه
+  if (player && player.stopVideo) {
+    player.stopVideo();
+    player.destroy(); // قطع الاتصال مع المشغل السابق
   }
 }
 
-// تابع لجلب آخر الأخبار باستخدام NewsAPI
-function getLatestNews(apiKey) {
-  const apiUrl = `https://newsapi.org/v2/top-headlines?country=eg&apiKey=${apiKey}`;
-
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      // عرض العناوين الرئيسية للأخبار
-      const headlines = data.articles.map(article => article.title);
-      console.log('آخر الأخبار:', headlines);
-
-    
-    })
-    .catch(error => {
-      console.error('حدث خطأ أثناء جلب الأخبار:', error);
-    });
-}
 
 
-// دالة للبحث على Google
-function searchOnGoogle(query) {
-  const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-  window.open(searchUrl, '_blank');
-}
+
+
+
+
+
+// // تابع لاستعلام حالة الطقس
+// async function inquireWeatherConditions() {
+//   try {
+//     const apiKey = '4dd7652a83af4d7580b90511240201';
+//     const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=cairo`;
+
+//     const response = await fetch(apiUrl);
+//     const data = await response.json();
+
+//     if (response.ok) {
+//       const temperature = data.current.temp_c;
+//       const condition = data.current.condition.text;
+
+//       console.log(`حالة الطقس الحالية: ${temperature} درجة مئوية`);
+//       return `حالة الطقس الحالية: ${temperature} درجة مئوية`;
+//     } else {
+//       console.error(`حدث خطأ أثناء استعلام حالة الطقس: ${data.error.message}`);
+//       return `حدث خطأ أثناء استعلام حالة الطقس: ${data.error.message}`;
+//     }
+//   } catch (error) {
+//     console.error('حدث خطأ غير متوقع أثناء استعلام حالة الطقس:', error);
+//     return 'حدث خطأ غير متوقع أثناء استعلام حالة الطقس';
+//   }
+// }
+
+// // تابع لجلب آخر الأخبار باستخدام NewsAPI
+// function getLatestNews(apiKey) {
+//   const apiUrl = `https://newsapi.org/v2/top-headlines?country=eg&apiKey=${apiKey}`;
+
+//   fetch(apiUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//       // عرض العناوين الرئيسية للأخبار
+//       const headlines = data.articles.map(article => article.title);
+//       console.log('آخر الأخبار:', headlines);
+
+//       // يمكنك استخدام headlines لعرض الأخبار في واجهة المستخدم
+//       // على سبيل المثال: قم بإنشاء قائمة HTML وعرض العناوين فيها
+//       // displayNewsInUI(headlines);
+//     })
+//     .catch(error => {
+//       console.error('حدث خطأ أثناء جلب الأخبار:', error);
+//     });
+// }
+
+
+// // دالة للبحث على Google
+// function searchOnGoogle(query) {
+//   const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+//   window.open(searchUrl, '_blank');
+// }
 
