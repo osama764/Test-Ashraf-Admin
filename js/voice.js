@@ -89,9 +89,7 @@ if (words[0] == "شغل" && words.length > 1) {
 if (words[0] == "وقف" || words[0] == "اسكت") {
   stopYouTubePlayer();
 } 
-if (words[0] == "كمل") {
-  continueYouTubePlayer();
-}
+
 
 
 
