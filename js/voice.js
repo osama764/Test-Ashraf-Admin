@@ -9,7 +9,6 @@ CloseAllDevices.addEventListener("click", () => {
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.lang = 'ar-EG';
 
-let isRecording = false;
 let recordedChunks = [];
 
 function separateCamelCase(input) {
@@ -188,28 +187,26 @@ function getDeviceIdByName(deviceName, currentRoomIndex) {
 }
 
 
+
 window.onload = () => {
   DisplayDevices();
   DisplayPushDevices();
   DisplayPushDevicesDoor();
   DisplayDevicesPushRemote();
-  toggleRecording()
+
+
+  recognition.start();
 };
 
-recognition.onend = function () {
-  if (isRecording) {
-    recognition.start();
-  }
+recognition.onstart = function() {
+  recognition.audio = false; 
 };
 
-function toggleRecording() {
-  if (isRecording) {
-    recognition.stop();
-  } else {
-    recognition.start();
-  }
-  isRecording = !isRecording;
-}
+recognition.onend = function() {
+  recognition.audio = true;
+  recognition.start();
+};
+
 
 function getDevicesWithSameType(currentRoomIndex, targetType) {
   return new Promise((resolve, reject) => {
