@@ -82,14 +82,15 @@ recognition.onresult = async function (event) {
 }
 
 if (words[0] == "شغل" && words.length > 1) {
-  
-  recognition.stop();
+
   const surahName = words.slice(1).join(' ');
   await speak("جاري تنفيذ طلبك");
   searchAndPlaySurahOnYouTube(surahName);
 
 } 
 if (words[0] == "وقف" || words[0] == "اسكت") {
+
+
   stopYouTubePlayer();
 } 
 
