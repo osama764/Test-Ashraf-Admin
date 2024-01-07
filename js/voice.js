@@ -296,7 +296,7 @@ async function speak(text) {
 let player;
 
 function searchAndPlaySurahOnYouTube(surahName) {
-  const apiKey = 'AIzaSyAU5t_qN921VW0jOnhWoAnoDxxAEdixjBE'; // يجب وضع مفتاح API الخاص بك هنا
+  const apiKey = 'AIzaSyB6-iYMYCniXT5xCoKOV6JH2KLLTRCWado'; // يجب وضع مفتاح API الخاص بك هنا
   const apiUrl = `https://www.googleapis.com/youtube/v3/search?q=${surahName}&part=snippet&type=video&key=${apiKey}`;
 
   // قبل تشغيل الفيديو الجديد، تأكد من إيقاف أي فيديو قيد التشغيل
