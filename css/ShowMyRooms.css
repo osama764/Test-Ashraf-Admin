@@ -534,6 +534,35 @@ position: absolute;
 
 
 }
+
+.media-player{
+  position: fixed;
+  z-index: 87478952;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 65%;
+  background-color: #fff;
+  text-align: center;
+  transform: translateY(110%);
+  transition: .7s;
+}
+.media-player .text{
+  font-size: 20px;
+  font-weight: 700;
+  color: #0c030e;
+  margin-top: 25px;
+}
+.media-player .btn{
+  font-weight: 700;
+}
+.media-player .closeFav{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+
+}
 @media (max-width: 1000px) {
 
 
