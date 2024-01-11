@@ -88,8 +88,6 @@ if (words[0] == "شغل" && words.length > 1) {
 
 } 
 if (words[0] == "وقف" || words[0] == "اسكت") {
-
-
   stopYouTubePlayer();
 } 
 
@@ -193,19 +191,9 @@ window.onload = () => {
   DisplayPushDevices();
   DisplayPushDevicesDoor();
   DisplayDevicesPushRemote();
-
-
   recognition.start();
 };
 
-recognition.onstart = function() {
-  recognition.audio = false; 
-};
-
-recognition.onend = function() {
-  recognition.audio = false;
-  recognition.start();
-};
 
 
 function getDevicesWithSameType(currentRoomIndex, targetType) {
@@ -344,6 +332,7 @@ function onPlayerReady(event) {
 }
 
 function stopYouTubePlayer() {
+
   // إذا كان هناك فيديو قيد التشغيل وليس محذوفًا، قم بإيقافه
   if (player && player.stopVideo) {
     console.log('تم إيقاف الفيديو');
@@ -354,8 +343,51 @@ function stopYouTubePlayer() {
     }
     // يمكنك إضافة رسالة إلى المستخدم هنا
   }
+
 }
 
+
+
+recognition.onend = function() {
+  recognition.start();
+};
+
+let closeFav        = document.querySelector(".closeFav")
+let openFav         = document.querySelector(".openFav")
+let media_Player    = document.querySelector(".media-player")
+let playFav         = document.querySelector(".playFav")
+let closeCurrentFav = document.querySelector(".closeCurrentFav")
+
+openFav.addEventListener("click",()=>{
+  recognition.stop();
+  recognition.onend = function() {
+    recognition.stop();
+  };
+  
+  media_Player.style.transform="translateY(0)"
+})
+
+closeFav.addEventListener("click",()=>{
+
+
+  recognition.start();
+  recognition.onend = function() {
+    recognition.start();
+  };
+  media_Player.style.transform="translateY(110%)"
+})
+
+closeCurrentFav.addEventListener("click",()=>{
+  recognition.stop();
+  recognition.onend = function() {
+    recognition.stop();
+  };
+  stopYouTubePlayer()
+})
+
+playFav.addEventListener("click",()=>{
+  recognition.start();
+})
 
 
 
