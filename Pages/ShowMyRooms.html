@@ -25,10 +25,11 @@
           speed="1" loop autoplay direction="1" mode="normal" class="p-2 lotee "
           style="background-color : #fff;border-radius: 8px;"></lottie-player>
           <div class="text-center recoordingDevice">
-            <p class="fs-5">  إغلاق جميع الاجهزة</p>
-            <button class="btn btn-warning closeAll"
+          
+            <button class="btn btn-warning closeAll mt-3"
             style="font-weight: 600;">إغلاق الجميع </button>
-        
+            <button class="btn btn-warning openFav mt-3"
+            style="font-weight: 600;"> تشغيل المفضلة </button>
       </div>
       </div>
     </div>
@@ -144,6 +145,13 @@
 
     <div id="youtube-player"></div>
 
+    <div class="media-player">
+      <button type="button" class="btn btn-warning closeFav">X</button>
+      <p class="text">التشغيل الصوتى للمفضلة</p>
+      <hr>
+      <button type="button" class="btn btn-warning playFav">تشغيل</button>
+      <button type="button" class="btn btn-warning closeCurrentFav">إيقاف</button>
+    </div>
     <script
       src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="../js/jquery_3.7.0.js"></script>
