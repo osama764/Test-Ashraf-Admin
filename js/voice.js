@@ -191,10 +191,20 @@ window.onload = () => {
   DisplayPushDevices();
   DisplayPushDevicesDoor();
   DisplayDevicesPushRemote();
-  recognition.start();
+  // recognition.start();
 };
 
+let openmicrphone = document.querySelector(".openmicrphone")
 
+openmicrphone.addEventListener("click",()=>{
+  recognition.start();
+})
+
+let closemicrphone = document.querySelector(".closemicrphone")
+
+closemicrphone.addEventListener("click",()=>{
+  recognition.stop();
+})
 
 function getDevicesWithSameType(currentRoomIndex, targetType) {
   return new Promise((resolve, reject) => {
@@ -348,9 +358,9 @@ function stopYouTubePlayer() {
 
 
 
-recognition.onend = function() {
-  recognition.start();
-};
+// recognition.onend = function() {
+//   recognition.start();
+// };
 
 let closeFav        = document.querySelector(".closeFav")
 let openFav         = document.querySelector(".openFav")
