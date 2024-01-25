@@ -125,7 +125,7 @@ console.log(data)
         if(room){
           let card = `
           <div class="card border-0 p-3 m-2 text-center" style="background-image: url(../images/${room.image}.jpg);">
-            <i class="fa-solid fa-trash-can deletbtnThisRoom"></i>
+           
             <h3 class="mt-3 mb-3 room__title">${room.Name}</h3>
             <button class="btn btn-warning visit">فتح الغرفة</button>
             <span style="opacity: 0">${room.id}</span>
