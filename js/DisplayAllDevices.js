@@ -20,7 +20,7 @@ function DisplayDevices() {
             <span style="opacity:0">${i}</span>
             <p class="nameOfDevice">${device.Name}</p>
             <img src="../imagesDevices/${device.nameImage}.jpg" alt="">
-            <i class="fa-solid fa-trash-can deletbtnDevice"></i>
+          
             <div class="container">
               <i class="fa-solid fa-power-off" style="color: ${iconColor}" data-room-key="${childSnapshot.key}" data-device-index="${i}"></i>
               <span style="opacity:0">${device.Name}</span>
@@ -93,7 +93,7 @@ function DisplayPushDevicesDoor() {
             <span style="opacity:0">${i}</span>
             <img src="../imagesDevices/${device.nameImage}.jpg" alt="">
             <p class="nameOfDevice">${device.Name}</p>
-            <i class="fa-solid fa-trash-can deletbtnDevice pushbtn"></i>
+           
             <div class="container">
               <i class="fa-solid fa-power-off" style="color: ${iconColorPush}" data-room-key="${childSnapshot.key}" data-device-index="${i}"></i>
             </div>
@@ -245,7 +245,7 @@ function DisplayPushDevices() {
             <span style="opacity:0">${i}</span>
           
             <p class="nameOfDevice">${device.Name}</p>
-            <i class="fa-solid fa-trash-can deletbtnDevice pushbtn"></i>
+       
             <div class="container">
               <i class="fa-solid fa-power-off" style="color: ${iconColorPush}" data-room-key="${childSnapshot.key}" data-device-index="${i}"></i>
             </div>
@@ -432,7 +432,7 @@ function DisplayDevicesPushRemote() {
             }"></i>`;
 
             let card = `<div class="card border-0 p-2">
-            <i class="fa-solid fa-trash-can deletbtnDevice"></i>
+            
             ${powerIcon}
             <div class="container">
               <img src="../imagesDevices/images.jpg" alt="">
