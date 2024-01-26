@@ -216,11 +216,7 @@ openmicrphone.addEventListener("click",()=>{
   recognition.start();
 })
 
-let closemicrphone = document.querySelector(".closemicrphone")
 
-closemicrphone.addEventListener("click",()=>{
-  recognition.stop();
-})
 
 function getDevicesWithSameType(currentRoomIndex, targetType) {
   return new Promise((resolve, reject) => {
