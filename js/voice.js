@@ -142,24 +142,18 @@ function updateDeviceStatusInCurrentRoom(roomKey, deviceIndex, newStatus) {
 }
 
 
-
 function updateAllDevicesStatus(status) {
   const roomsRef = database.ref('Rooms');
   roomsRef.once('value').then(snapshot => {
     const rooms = snapshot.val();
-
     if (rooms) {
-      // تحديث حالة جميع الأجهزة في جميع الغرف
       Object.keys(rooms).forEach(roomIndex => {
         const devices = rooms[roomIndex]?.devices;
         if (devices) {
-          // تأخير التحديث بين كل جهاز والآخر بمقدار 1000 مللي ثانية (1 ثانية)
           Object.keys(devices).forEach((deviceIdInRoom, index) => {
             setTimeout(() => {
-              const deviceRef = roomsRef.child(`${roomIndex}/devices/${deviceIdInRoom}`);
-              deviceRef.update({ status: status });
-              console.log(`تم تحديث حالة الجهاز ${deviceIdInRoom} في الغرفة ${roomIndex} إلى ${status}`);
-            }, index * 1000);
+              updateDeviceStatusInCurrentRoom(roomIndex, deviceIdInRoom, status);
+            }, index * 500);
           });
         }
       });
