@@ -60,22 +60,21 @@ recognition.onresult = async function (event) {
       deviceName = deviceName.replace("1", "واحد");
     }
 
-    try {
+  try {
       const roomId = await getIdByRoomName(currentName);
     
       if (roomId) {
         const deviceId = await getDeviceIdByName(deviceName, roomId);
         // تحديث حالة الجهاز بناءً على الأمر الصوتي
-        const deviceStatus = words[0] == "افتح" ? 1 : 0;
-        updateDeviceStatusInCurrentRoom(deviceId, deviceStatus, roomId);
-      
+        const deviceStatus = words[0] == "افتح" ? "1" : "0";
+    
+        // استدعاء الدالة بدون توفير snapshot
+        updateDeviceStatusInCurrentRoom(roomId, deviceId, deviceStatus);
       } else {
         console.log(`لم يتم العثور على الغرفة ${currentName}`);
       }
     } catch (error) {
-    
-      console.log(error);
-
+      console.error(error);
     }
     
 }
@@ -111,23 +110,38 @@ if (words[0] == "وقف" || words[0] == "اسكت") {
 
 
 // دالة لتحديث حالة الجهاز في الغرفة الحالية
-function updateDeviceStatusInCurrentRoom(deviceId, status, currentRoomIndex) {
-  const roomsRef = database.ref(`Rooms/${currentRoomIndex}`);
+function updateDeviceStatusInCurrentRoom(roomKey, deviceIndex, newStatus) {
+  const roomsRef = database.ref(`Rooms/${roomKey}`);
 
   roomsRef.once('value').then(snapshot => {
-    const devices = snapshot.val()?.devices;
+    const devicesArray = snapshot.child(`devices`).val() || [];
 
-    if (devices && devices[deviceId]) {
-      const deviceRef = roomsRef.child(`devices/${deviceId}`);
-      deviceRef.update({ status: status });
-      console.log(`تم تحديث حالة الجهاز ${deviceId} في الغرفة ${currentRoomIndex} إلى ${status}`);
-    } else {
-      console.log(`الجهاز ${deviceId} غير موجود في الغرفة ${currentRoomIndex}`);
+    // Check if the deviceIndex is within the valid range
+    if (deviceIndex >= 0 && deviceIndex < devicesArray.length) {
+      const deviceRef = roomsRef.child(`devices/${deviceIndex}`);
+
+      const device = devicesArray[deviceIndex];
+      const data = {
+        status: newStatus,
+        Name: device.Name,
+        nameImage: device.nameImage,
+      
+      };
+
+      deviceRef.update(data)
+        .then(() => {
+          console.log(`تم تحديث حالة الجهاز ${deviceIndex} في الغرفة ${roomKey} إلى ${newStatus}`);
+        })
+        .catch(error => {
+          console.error(`حدث خطأ أثناء تحديث حالة الجهاز ${deviceIndex} في الغرفة ${roomKey}: ${error}`);
+        });
     }
   }).catch(error => {
-    console.error(`حدث خطأ أثناء الوصول إلى بيانات الغرفة ${currentRoomIndex}: ${error}`);
+    console.error(`حدث خطأ أثناء الوصول إلى بيانات الغرفة ${roomKey}: ${error}`);
   });
 }
+
+
 
 function updateAllDevicesStatus(status) {
   const roomsRef = database.ref('Rooms');
@@ -139,10 +153,13 @@ function updateAllDevicesStatus(status) {
       Object.keys(rooms).forEach(roomIndex => {
         const devices = rooms[roomIndex]?.devices;
         if (devices) {
-          Object.keys(devices).forEach(deviceIdInRoom => {
-            const deviceRef = roomsRef.child(`${roomIndex}/devices/${deviceIdInRoom}`);
-            deviceRef.update({ status: status });
-            console.log(`تم تحديث حالة الجهاز ${deviceIdInRoom} في الغرفة ${roomIndex} إلى ${status}`);
+          // تأخير التحديث بين كل جهاز والآخر بمقدار 1000 مللي ثانية (1 ثانية)
+          Object.keys(devices).forEach((deviceIdInRoom, index) => {
+            setTimeout(() => {
+              const deviceRef = roomsRef.child(`${roomIndex}/devices/${deviceIdInRoom}`);
+              deviceRef.update({ status: status });
+              console.log(`تم تحديث حالة الجهاز ${deviceIdInRoom} في الغرفة ${roomIndex} إلى ${status}`);
+            }, index * 1000);
           });
         }
       });
@@ -153,7 +170,6 @@ function updateAllDevicesStatus(status) {
     console.error("حدث خطأ أثناء الوصول إلى قاعدة البيانات", error);
   });
 }
-
 
 function getDeviceIdByName(deviceName, currentRoomIndex) {
   const roomsRef = database.ref(`Rooms/${currentRoomIndex}`);
