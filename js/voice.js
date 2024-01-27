@@ -147,16 +147,16 @@ function updateAllDevicesStatus(status) {
   roomsRef.once('value').then(snapshot => {
     const rooms = snapshot.val();
     if (rooms) {
-      Object.keys(rooms).forEach(roomIndex => {
+      for (const roomIndex in rooms) {
         const devices = rooms[roomIndex]?.devices;
         if (devices) {
-          Object.keys(devices).forEach((deviceIdInRoom, index) => {
+          for (const deviceIdInRoom in devices) {
             setTimeout(() => {
               updateDeviceStatusInCurrentRoom(roomIndex, deviceIdInRoom, status);
-            }, index * 500);
-          });
+            }, devices[deviceIdInRoom].index * 500);
+          }
         }
-      });
+      }
     } else {
       console.log('لا توجد غرف في قاعدة البيانات');
     }
@@ -164,7 +164,6 @@ function updateAllDevicesStatus(status) {
     console.error("حدث خطأ أثناء الوصول إلى قاعدة البيانات", error);
   });
 }
-
 function getDeviceIdByName(deviceName, currentRoomIndex) {
   const roomsRef = database.ref(`Rooms/${currentRoomIndex}`);
 
